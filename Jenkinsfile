@@ -25,7 +25,7 @@ node {
   }
 
   stage('Deploy') {
-    sh "helm install ./charts/coffee-svc --name coffee-svc --set image.tag=0.0.${env.BUILD_NUMBER},domain=coffee.svc.cluster.twelvelabs.com"
+    sh "helm update ./charts/coffee-svc --name coffee-svc --set image.tag=0.0.${env.BUILD_NUMBER},domain=coffee.svc.cluster.twelvelabs.com"
   }
 
 }
