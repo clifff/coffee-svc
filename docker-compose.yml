@@ -1,0 +1,9 @@
+version: '2'
+services:
+  app:
+    build: .
+    image: coffee-svc:latest
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/app
