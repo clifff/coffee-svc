@@ -25,7 +25,11 @@ node {
   }
 
   stage('Deploy') {
-    sh "helm upgrade coffee-svc ./charts/coffee-svc --install --set image.tag=0.0.${env.BUILD_NUMBER},domain=coffee.svc.cluster.twelvelabs.com"
+    def appName = "coffee-${env.BRANCH_NAME}"
+    if (env.BRANCH_NAME == 'master') {
+      appName = "coffee"
+    }
+    sh "helm upgrade ${appName} ./charts/coffee-svc --install --set image.tag=0.0.${env.BUILD_NUMBER},domain=${appName}.svc.cluster.twelvelabs.com"
   }
 
 }
