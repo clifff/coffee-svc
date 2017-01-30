@@ -6,15 +6,29 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 spec:
   replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
   template:
     metadata:
       labels:
         app: {{ template "fullname" . }}
     spec:
+      volumes:
+      {{- if .Values.sourcePath }}
+      - name: {{ .Chart.Name }}-source
+        hostPath:
+          path: {{ .Values.sourcePath }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        {{- if .Values.sourcePath }}
+        - name: {{ .Chart.Name }}-source
+          mountPath: /app
+        {{- end }}
         ports:
         - containerPort: {{ .Values.service.internalPort }}
         livenessProbe:
