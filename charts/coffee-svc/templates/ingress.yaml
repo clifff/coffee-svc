@@ -6,7 +6,7 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 spec:
   rules:
-  - host: {{ .Values.domain }}
+  - host: {{ .Values.subdomain | default .Release.Name }}.{{ .Values.domain }}
     http:
       paths:
       - backend:

@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 replicaCount: 1
-domain: coffee-svc.cluster.local
+# sourcePath: /Users/yourname/path/to/app/dir
 image:
   repository: twelvelabs/coffee-svc
   tag: dev
@@ -12,6 +12,9 @@ service:
   type: ClusterIP
   externalPort: 80
   internalPort: 5000
+ingress:
+  domain: svc.cluster.twelvelabs.com
+  # subdomain: coffee-service
 resources:
   limits:
     cpu: 100m

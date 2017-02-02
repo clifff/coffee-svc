@@ -1,20 +1,21 @@
 APP_NAME = coffee-svc
 POD_NAME = $(shell kubectl get po --selector=app=coffee-svc-coffee-svc -o jsonpath='{.items[*].metadata.name}')
 TEST_COMMAND = bundle exec rake test
+CLUSTER_DOMAIN = cluster.local
 
 SRC_DIR := $(shell pwd)/app
 DST_DIR := /app
 
 DOCKER_VOLUME := $(SRC_DIR):$(DST_DIR)
 DOCKER_REPO   := twelvelabs/$(APP_NAME)
-DOCKER_TAG    := dev
+DOCKER_TAG    := dev.$(shell git rev-parse --abbrev-ref HEAD)
 DOCKER_IMAGE  := $(DOCKER_REPO):$(DOCKER_TAG)
 
 build:
 	docker build -t $(DOCKER_IMAGE) .
 
 start:
-	helm upgrade $(APP_NAME) ./charts/$(APP_NAME) --install --set image.repository=$(DOCKER_REPO),image.tag=$(DOCKER_TAG),sourcePath=$(SRC_DIR)
+	helm upgrade $(APP_NAME) ./charts/$(APP_NAME) --install --set image.repository=$(DOCKER_REPO),image.tag=$(DOCKER_TAG),sourcePath=$(SRC_DIR),ingress.domain=$(CLUSTER_DOMAIN)
 
 stop:
 	helm delete --purge $(APP_NAME)

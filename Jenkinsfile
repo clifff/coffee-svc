@@ -29,7 +29,7 @@ node {
     if (env.BRANCH_NAME == 'master') {
       appName = "coffee"
     }
-    sh "helm upgrade ${appName} ./charts/coffee-svc --install --set image.tag=0.0.${env.BUILD_NUMBER},domain=${appName}.svc.cluster.twelvelabs.com"
+    sh "helm upgrade ${appName} ./charts/coffee-svc --install --set image.tag=0.0.${env.BUILD_NUMBER}
   }
 
 }
