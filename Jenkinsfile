@@ -36,7 +36,7 @@ node {
   }
 
   stage('Deploy') {
-    sh "helm upgrade ${releaseName} ${chartName} --install --set image.repository=${dockerImageRepo},image.tag=${gitCommitSHA}
+    sh "helm upgrade ${releaseName} ${chartName} --install --set image.repository=${dockerImageRepo},image.tag=${gitCommitSHA}"
   }
 
 }
