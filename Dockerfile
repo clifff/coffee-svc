@@ -8,11 +8,11 @@ WORKDIR $APP_ROOT
 # bundle gems first to take advantage of layer caching
 ENV BUNDLE_GEMFILE=$APP_ROOT/Gemfile \
     BUNDLE_JOBS=2
-ADD Gemfile* $APP_ROOT/
-RUN bundle install --path vendor/bundle
+ADD ./app/Gemfile* $APP_ROOT/
+RUN bundle install
 
 # copy over source files
-ADD . $APP_HOME
+ADD ./app $APP_HOME
 
 # launch the app
 CMD bundle exec rackup --host 0.0.0.0 -p 5000
