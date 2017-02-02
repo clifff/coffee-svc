@@ -1,5 +1,7 @@
 node {
 
+  checkout scm
+
   def gitCommitSHA    = sh(returnStdout: true, script: 'git rev-parse --short=12 HEAD').trim()
   def gitBranchName   = env.BRANCH_NAME
 
@@ -12,12 +14,11 @@ node {
 
 
   stage('Build') {
-    checkout scm
     sh "docker build -t ${dockerImageRepo}:${gitCommitSHA} ."
   }
 
   stage('Test') {
-    sh "docker run --rm -v ${dockerImageRepo}:${gitCommitSHA} bundle exec rake test"
+    sh "docker run --rm ${dockerImageRepo}:${gitCommitSHA} bundle exec rake test"
   }
 
   stage('Publish') {
