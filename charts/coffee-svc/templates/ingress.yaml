@@ -1,14 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "shortname" . }}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 spec:
   rules:
-  - host: {{ .Values.subdomain | default .Release.Name }}.{{ .Values.domain }}
+  - host: {{ .Values.ingress.subdomain | default .Release.Name }}.{{ .Values.ingress.domain }}
     http:
       paths:
       - backend:
-          serviceName: {{ template "fullname" . }}
+          serviceName: {{ template "shortname" . }}
           servicePort: 80

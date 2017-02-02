@@ -1,18 +1,18 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "shortname" . }}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "fullname" . }}
+      app: {{ template "shortname" . }}
   template:
     metadata:
       labels:
-        app: {{ template "fullname" . }}
+        app: {{ template "shortname" . }}
     spec:
       volumes:
       {{- if .Values.sourcePath }}

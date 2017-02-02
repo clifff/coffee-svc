@@ -1,5 +1,5 @@
 APP_NAME = coffee-svc
-POD_NAME = $(shell kubectl get po --selector=app=coffee-svc-coffee-svc -o jsonpath='{.items[*].metadata.name}')
+POD_NAME = $(shell kubectl get po --selector=app=coffee-svc -o jsonpath='{.items[*].metadata.name}')
 TEST_COMMAND = bundle exec rake test
 CLUSTER_DOMAIN = cluster.local
 
